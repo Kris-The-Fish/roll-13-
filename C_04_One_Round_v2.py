@@ -2,7 +2,6 @@ import random
 
 from Roll_it_13.C_04_One_Round_v1 import double_user
 
-
 def initial_points(which_player):
     """Roll dice twice and return total / if double points apply"""
 
@@ -57,13 +56,13 @@ else:
     first, second = second, first
 
 # Loop untin we have a winner...
-player_1_roll = random.randint(1, 6)
-player_1_points += player_1_roll
 
 # if the person's score is over 13, end the round
 while player_1_points < 13 and player_2_points < 13:
     print()
     input("Press <enter> to continue this round\n")
+    player_1_roll = random.randint(1, 6)
+    player_1_points += player_1_roll
 
     print(f"{first}: Rolled a {player_1_roll} - has {player_1_points} points")
 
@@ -79,5 +78,30 @@ while player_1_points < 13 and player_2_points < 13:
 
     print(f"{first}: {player_1_points} | {second}: {player_2_points}")
 
-print("end of round")
+# end of round
 
+# associate player points with either the user or the computer
+user_points = player_1_points
+comp_points = player_2_points
+
+#switch the user and the computer points if the computer went first
+if first == "Computer":
+    user_points, comp_points = comp_points, user_points
+
+# work out who won...
+if user_points > comp_points:
+    winner = "User"
+else:
+    winner = "Computer"
+
+round_feedback = f"The {winner} won."
+
+# double user points if eligible
+if winner == "User" and double_user == "yes":
+    user_points = user_points * 2
+
+# Output round results
+print("\nRound Results")
+print(f"User Points: {user_points} | Computer Points :{comp_points}")
+print(round_feedback)
+print()
